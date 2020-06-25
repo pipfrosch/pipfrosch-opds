@@ -8,6 +8,8 @@ import json
 from xml.dom import minidom
 from dateutil import parser
 
+# https://specs.opds.io/opds-1.2.html#23-acquisition-feeds
+
 def createAtomFeed(cwd, jsonfile):
     mtime = []
     ts = datetime.datetime.fromtimestamp(os.path.getmtime(jsonfile))
@@ -64,6 +66,11 @@ def createAtomFeed(cwd, jsonfile):
         authornode.appendChild(uri)
         root.appendChild(authornode)
     # TODO - retrieve the entry nodes
+    entries = jsondata.get("entries")
+    for atomfile in entries:
+        filepath = os.path.join(cwd, atomfile)
+        ts = datetime.datetime.fromtimestamp(os.path.getmtime(filepath))
+        mtime.append(ts.strftime("%Y-%m-%dT%H:%M:%SZ"))
     # update the modified
     mtime.sort(reverse=True)
     text = mydom.createTextNode(mtime[0])
