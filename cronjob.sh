@@ -6,9 +6,12 @@ if [ -d /srv/pipfrosch/pipfrosch-opds ]; then
   n="`git status -uno |grep -ci "your branch is behind"`"
   if [ ${n} != "0" ]; then
     echo "do stuff"
+    git pull
+    if [ $? -eq 0 ]; then
+      echo "successful pull"
+    fi
   else
     echo "do nothing"
   fi
   popd
 fi
-# comment for testing
