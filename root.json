@@ -21,6 +21,7 @@
     }
   ],
   "acquisitions" : [
+    "recent.json",
     "JoM.json",
     "vertebrates.json",
     "mammals.json"

@@ -145,7 +145,11 @@ def createAtomFeed(cwd, jsonfile):
             entry.appendChild(node)
             # feed link
             node = mydom.createElement('link')
-            node.setAttribute('rel', 'subsection')
+            if "rootrel" in feeddata.keys():
+                string = feeddata.get('rootrel')
+            else:
+                string = 'subsection'
+            node.setAttribute('rel', string)
             prestring = feeddata.get('output')
             string = prestring[4:]
             node.setAttribute('href', string)
