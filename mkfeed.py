@@ -33,7 +33,11 @@ def createAtomFeed(cwd, jsonfile):
     for ns in nskeys:
         root.setAttribute('xmlns:' + ns, namespaces.get(ns))
     # get id
-    string = jsondata.get("id")
+    stringlist = list(jsondata.get("id"))
+    if "-noitalics" in jsonfile:
+        # indicate noitalics by changing first hex of fourth group to 9
+        stringlist[28] = "9"
+    string = ''.join(stringlist)
     text = mydom.createTextNode(string)
     node = mydom.createElement('id')
     node.appendChild(text)
@@ -79,7 +83,7 @@ def createAtomFeed(cwd, jsonfile):
         entrydom = minidom.parse(filepath)
         entrynode = mydom.importNode(entrydom.childNodes[0], True)
         entrynode.removeAttribute('xmlns')
-        entrynode.removeAttribute('xmlns:dcterms')
+        entrynode.removeAttribute('xmlns:dc')
         whitelist = ["text/html", "image/jpeg", "image/png", "application/epub+zip"]
         linklist = entrynode.getElementsByTagName("link")
         i = len(linklist) - 1

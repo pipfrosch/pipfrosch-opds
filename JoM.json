@@ -2,10 +2,9 @@
   "output" : "opds/JoM/JoM.atom",
   "root"   : "feed",
   "namespaces" : {
-    "dcterms" : "http://purl.org/dc/terms/",
-    "opds"    : "http://opds-spec.org/2010/catalog"
+    "dc"   : "http://purl.org/dc/terms/"
   },
-  "id"     : "someid",
+  "id"     : "urn:uuid:63a27309-bb5e-412c-8190-9f8f5b1efe58",
   "links" : [
     {
       "rel" : "related",

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entry xmlns="http://www.w3.org/2005/Atom" xmlns:dcterms="http://purl.org/dc/terms/">
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/">
   <title>Journal of Mammalogy Volume 1</title>
-  <id>urn:uuid:2170060d-e36c-49b7-8640-e501d682ef45</id>
+  <id>urn:uuid:bc955e92-abb4-4f8f-8929-839b7235a5ae</id>
   <author>
     <name>American Society of Mammalogists</name>
     <uri>https://www.mammalogy.org/</uri>
   </author>
   <published>2020-06-01T00:00:00Z</published>
-  <updated>2020-06-25T19:15:45Z</updated>
-  <dcterms:language>en-US</dcterms:language>
-  <dcterms:publisher>Pipfrosch Press</dcterms:publisher>
-  <dcterms:issued>1919–1920</dcterms:issued>
+  <dc:language>en-US</dc:language>
+  <dc:identifier>2170060d-e36c-49b7-8640-e501d682ef45</dc:identifier>
+  <dc:publisher>Pipfrosch Press</dc:publisher>
+  <dc:issued>1919–1920</dc:issued>
   <summary>1919–1920 Numbers 1–5 plus Supplemental content</summary>
   <link href="https://pipfrosch.com/jom-volume-1-preview-1/" rel="alternate" title="View at Pipfrosch Press" type="text/html"/>
-  <link href="https://opds.pipfrosch.com/JoM/JoM-V001.cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg"/>
-  <link href="https://opds.pipfrosch.com/JoM/JoM-V001.thumbnail.jpg" rel="http://opds-spec.org/image/thumbnail" type="image/jpeg"/>
-  <link href="https://opds.pipfrosch.com/JoM/JoM-V001.atom" rel="self" type="application/atom+xml;type=entry;profile=opds-catalog"/>
+  <link href="/JoM/JoM-V001.cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg"/>
+  <link href="/JoM/JoM-V001.thumbnail.jpg" rel="http://opds-spec.org/image/thumbnail" type="image/jpeg"/>
+  <link href="/JoM/JoM-V001.atom" rel="self" type="application/atom+xml;type=entry;profile=opds-catalog"/>
   <link href="https://epub.pipfrosch.com/JoM/JoM-V001.kepub.epub" rel="http://opds-spec.org/acquisition" type="application/epub+zip"/>
-  <link href="https://opds.pipfrosch.com/JoM/JoM.atom" rel="http://www.feedbooks.com/opds/same_author" title="More offering from Journal of Mammalogy" type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
+  <link href="/JoM/JoM.atom" rel="http://www.feedbooks.com/opds/same_author" title="More offering from Journal of Mammalogy" type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
 </entry>
