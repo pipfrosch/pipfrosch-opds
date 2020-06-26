@@ -6,6 +6,7 @@ import time
 import datetime
 import pytz
 import json
+import re
 from xml.dom import minidom
 from dateutil import parser
 
@@ -13,6 +14,28 @@ os.environ['TZ'] = 'Europe/London'
 time.tzset()
 
 # https://specs.opds.io/opds-1.2.html#23-acquisition-feeds
+
+def validateUUID(string):
+    if len(string) != 45:
+        print(string + " is not a valid UUID urn string.")
+        sys.exit(1)
+    header = string[0:9]
+    if header != "urn:uuid:":
+        print(string + " is not a valid UUID urn string.")
+        sys.exit(1)
+    uuidstring = string[9:]
+    pattern = re.compile(r'^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$', re.IGNORECASE)
+    match = re.search(pattern, uuidstring)
+    if not match:
+        print(string + " is not a valid UUID urn string.")
+        sys.exit(1)
+    uuidlist = list(uuidstring)
+    if uuidlist[14] != "4":
+        print(uuidstring + " is not a valid Version 4 UUID.")
+        sys.exit(1)
+    if uuidlist[19] != "8":
+        print("first character of fourth block in " + uuidstring + " is not 8")
+        sys.exit(1)
 
 def createAtomFeed(cwd, jsonfile):
     mtime = []
@@ -48,6 +71,7 @@ def createAtomFeed(cwd, jsonfile):
     if "id" not in jsondata.keys():
         print(jsonfile + ' does not specify id.')
         sys.exit(1)
+    validateUUID(jsondata.get("id"))
     # TODO verify uuid
     stringlist = list(jsondata.get("id"))
     if "-noitalics" in jsonfile:

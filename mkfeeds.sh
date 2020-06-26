@@ -12,3 +12,5 @@ cat root.json |sed -e s?"\.json"?"-noitalics.json"?g |sed -e s?"\.atom"?"-noital
 touch -r root-noitalics.json root.json
 python3 mkfeed.py root.json
 python3 mkfeed.py root-noitalics.json
+
+rm -rf __pycache__
