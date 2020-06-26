@@ -35,6 +35,10 @@ The `cronjob.sh` script should be copied outside the git repo before running
 from cron so that `OPBSHOME` can be changed as needed. It should point to a
 directory that is a git clone.
 
+The `cronjob.sh` script will not create output to the console *unless* the
+generation of OPDS files results in an error, in which case many cron clients
+are configured to e-mail the console output to the user account.
+
 The not-yet-written `rsync.sh` script will pull the OPDS Atom files (and cover
 and thumbnail images) into the web server serving the OPDS Atom files.
 
