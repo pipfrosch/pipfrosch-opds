@@ -16,10 +16,21 @@ time.tzset()
 
 def createAtomFeed(cwd, jsonfile):
     mtime = []
-    ts = datetime.datetime.fromtimestamp(os.path.getmtime(jsonfile))
+    try:
+        ts = datetime.datetime.fromtimestamp(os.path.getmtime(jsonfile))
+    except:
+        print('File ' + jsonfile + ' does not exist.')
+        sys.exit(1)
     mtime.append(ts.strftime("%Y-%m-%dT%H:%M:%SZ"))
-    with open(jsonfile) as f:
-        jsondata = json.load(f)
+    try:
+        with open(jsonfile) as f:
+            jsondata = json.load(f)
+    except:
+        print(jsonfile + ' does not appear to be valid JSON.')
+        sys.exit(1)
+    if "output" not in jsondata.keys():
+        print(jsonfile + ' does not specify proper output file.')
+        sys.exit(1)
     string = jsondata.get("output")
     atom = os.path.join(cwd, string)
     string = "<feed/>"
@@ -28,11 +39,16 @@ def createAtomFeed(cwd, jsonfile):
     # add namespaces
     root.setAttribute('xmlns', 'http://www.w3.org/2005/Atom')
     if "namespaces" in jsondata.keys():
+        #today ckeck if has keys
         namespaces = jsondata.get("namespaces")
         nskeys = namespaces.keys()
         for ns in nskeys:
             root.setAttribute('xmlns:' + ns, namespaces.get(ns))
     # get id
+    if "id" not in jsondata.keys():
+        print(jsonfile + ' does not specify id.')
+        sys.exit(1)
+    # TODO verify uuid
     stringlist = list(jsondata.get("id"))
     if "-noitalics" in jsonfile:
         # indicate noitalics by changing first hex of fourth group to 9
@@ -44,13 +60,20 @@ def createAtomFeed(cwd, jsonfile):
     root.appendChild(node)
     # get links
     links = jsondata.get("links")
+    if "links" not in jsondata.keys():
+        print(jsonfile + ' does not specify links.')
+        sys.exit(1)
     for link in links:
+        # TODO verify links
         node = mydom.createElement('link')
         node.setAttribute("rel", link.get("rel"))
         node.setAttribute("href", link.get("href"))
         node.setAttribute("type", link.get("type"))
         root.appendChild(node)
     # feed title
+    if "title" not in jsondata.keys():
+        print(jsonfile + ' does not specify title.')
+        sys.exit(1)
     string = jsondata.get("title")
     text = mydom.createTextNode(string)
     node = mydom.createElement('title')
@@ -60,6 +83,9 @@ def createAtomFeed(cwd, jsonfile):
     modified = mydom.createElement('updated')
     root.appendChild(modified)
     # author(s)
+    if "authors" not in jsondata.keys():
+        print(jsonfile + ' does not specify author(s).')
+        sys.exit(1)
     authors = jsondata.get("authors")
     for author in authors:
         string = author.get("name")
@@ -74,8 +100,10 @@ def createAtomFeed(cwd, jsonfile):
         authornode.appendChild(name)
         authornode.appendChild(uri)
         root.appendChild(authornode)
+    testcounter = 0
     # acquisition nodes
     if "acquisitions" in jsondata.keys():
+        testcounter += 1
         acquisitions = jsondata.get("acquisitions")
         for feed in acquisitions:
             feedjson = os.path.join(cwd, feed)
@@ -123,6 +151,7 @@ def createAtomFeed(cwd, jsonfile):
             root.appendChild(entry)
     # entry nodes
     if "entries" in jsondata.keys():
+        testcounter += 1
         entries = jsondata.get("entries")
         for atomfile in entries:
             filepath = os.path.join(cwd, atomfile)
@@ -142,6 +171,9 @@ def createAtomFeed(cwd, jsonfile):
                     entrynode.removeChild(node)
                 i -= 1
             root.appendChild(entrynode)
+    if testcounter == 0:
+        print(jsonfile + ' does not have acquisition or entry nodes.')
+        sys.exit(1)
     # update the modified
     mtime.sort(reverse=True)
     text = mydom.createTextNode(mtime[0])
@@ -149,9 +181,13 @@ def createAtomFeed(cwd, jsonfile):
     # dump to file
     string = mydom.toprettyxml(indent="  ",newl="\n",encoding="UTF-8").decode()
     string = '\n'.join([x for x in string.split("\n") if x.strip()!=''])
-    fh = open(atom, "w")
-    fh.write(string)
-    fh.close()
+    try:
+        fh = open(atom, "w")
+        fh.write(string)
+        fh.close()
+    except:
+        print('Could not write to file ' + atom)
+        sys.exit(1)
 
 def main():
     if len(sys.argv) != 2:
