@@ -1,0 +1,45 @@
+{
+  "output" : "opds/groups/mammals.atom",
+  "root"   : "feed",
+  "namespaces" : {
+    "dc"   : "http://purl.org/dc/terms/"
+  },
+  "id"     : "urn:uuid:26d42127-74bc-4784-89c9-35049bb9f3b1",
+  "links" : [
+    {
+      "rel" : "related",
+      "href" : "/JoM/JoM.atom",
+      "type" : "application/atom+xml;profile=opds-catalog;kind=acquisition"
+    },
+    {
+      "rel" : "related",
+      "href" : "/vertebrates.atom",
+      "type" : "application/atom+xml;profile=opds-catalog;kind=acquisition"
+    },
+    {
+      "rel" : "self",
+      "href" : "/groups/mammals.atom",
+      "type" : "application/atom+xml;profile=opds-catalog;kind=acquisition"
+    },
+    {
+      "rel" : "start",
+      "href" : "/root.atom",
+      "type" : "application/atom+xml;profile=opds-catalog;kind=navigation"
+    },    
+    {
+      "rel" : "up",
+      "href" : "/root.atom",
+      "type" : "application/atom+xml;profile=opds-catalog;kind=navigation"
+    }
+  ],
+  "title"  : "Mammal Publications",
+  "authors" : [
+    {
+      "name" : "American Society of Mammalogists",
+      "uri"  : "https://www.mammalogy.org/"
+    }
+  ],
+  "entries" : [
+    "opds/JoM/JoM-V001.atom"
+  ]
+}
