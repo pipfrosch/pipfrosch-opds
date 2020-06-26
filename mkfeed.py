@@ -2,11 +2,15 @@
 import sys
 import os
 import pathlib
+import time
 import datetime
 import pytz
 import json
 from xml.dom import minidom
 from dateutil import parser
+
+os.environ['TZ'] = 'Europe/London'
+time.tzset()
 
 # https://specs.opds.io/opds-1.2.html#23-acquisition-feeds
 
@@ -23,10 +27,11 @@ def createAtomFeed(cwd, jsonfile):
     mydom = minidom.parseString(string)
     root = mydom.getElementsByTagName(roottag)[0]
     # add namespaces
+    root.setAttribute('xmlns', 'http://www.w3.org/2005/Atom')
     namespaces = jsondata.get("namespaces")
     nskeys = namespaces.keys()
     for ns in nskeys:
-        root.setAttribute(ns, namespaces.get(ns))
+        root.setAttribute('xmlns:' + ns, namespaces.get(ns))
     # get id
     string = jsondata.get("id")
     text = mydom.createTextNode(string)
@@ -71,6 +76,21 @@ def createAtomFeed(cwd, jsonfile):
         filepath = os.path.join(cwd, atomfile)
         ts = datetime.datetime.fromtimestamp(os.path.getmtime(filepath))
         mtime.append(ts.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        entrydom = minidom.parse(filepath)
+        entrynode = mydom.importNode(entrydom.childNodes[0], True)
+        entrynode.removeAttribute('xmlns')
+        entrynode.removeAttribute('xmlns:dcterms')
+        whitelist = ["text/html", "image/jpeg", "image/png", "application/epub+zip"]
+        linklist = entrynode.getElementsByTagName("link")
+        i = len(linklist) - 1
+        while i >= 0 :
+            node = linklist[i]
+            ntype = node.getAttribute('type')
+            if ntype not in whitelist:
+                entrynode.removeChild(node)
+            i -= 1
+        root.appendChild(entrynode)
+        
     # update the modified
     mtime.sort(reverse=True)
     text = mydom.createTextNode(mtime[0])
