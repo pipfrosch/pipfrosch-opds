@@ -16,6 +16,9 @@ time.tzset()
 # https://specs.opds.io/opds-1.2.html#23-acquisition-feeds
 
 def validateUUID(string):
+    if type(string) != str:
+        print(string + " is not a valid UUID urn string.")
+        sys.exit(1)
     if len(string) != 45:
         print(string + " is not a valid UUID urn string.")
         sys.exit(1)
