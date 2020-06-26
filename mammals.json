@@ -13,7 +13,7 @@
     },
     {
       "rel" : "related",
-      "href" : "/vertebrates.atom",
+      "href" : "/groups/vertebrates.atom",
       "type" : "application/atom+xml;profile=opds-catalog;kind=acquisition"
     },
     {

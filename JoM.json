@@ -8,12 +8,12 @@
   "links" : [
     {
       "rel" : "related",
-      "href" : "/mammals.atom",
+      "href" : "/groups/mammals.atom",
       "type" : "application/atom+xml;profile=opds-catalog;kind=acquisition"
     },
     {
       "rel" : "related",
-      "href" : "/vertebrates.atom",
+      "href" : "/groups/vertebrates.atom",
       "type" : "application/atom+xml;profile=opds-catalog;kind=acquisition"
     },
     {
