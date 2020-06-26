@@ -2,6 +2,7 @@
 for json in JoM.json mammals.json vertebrates.json recent.json; do
   noitalics="`echo ${json} |sed -e s?"\.json$"?"-noitalics.json"?`"
   cat ${json} |sed -e s?"\.atom"?"-noitalics.atom"?g > ${noitalics}
+  # make sure noitalics have same modification timestamp
   touch -r ${json} ${noitalics}
   python3 mkfeed.py ${json}
   python3 mkfeed.py ${noitalics}
