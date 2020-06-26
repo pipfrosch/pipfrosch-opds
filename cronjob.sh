@@ -1,4 +1,11 @@
 #!/bin/bash
+
+# SECURITY WARNING
+#  THIS SCRIPT AUTOMATICALLY GRABS REMOTE CONTENT AND EXECUTES IT,
+#  RUN AS UNPRIVILEGED USER THAT ONLY HAS WRITE PERMISSION IN /srv/pipfrosch/pipfrosch-opds
+# SAFER WOULD BE RUN IN OWN CONTAINER AND RSYNC OVER SSH TO /srv/pipfrosch/pipfrosch-opds
+#  SO THAT IS TODO
+#
 if [ -d /srv/pipfrosch/pipfrosch-opds ]; then
   pushd /srv/pipfrosch/pipfrosch-opds
   git remote update
