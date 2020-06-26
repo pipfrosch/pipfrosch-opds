@@ -16,6 +16,7 @@ if [ -d /srv/pipfrosch/pipfrosch-opds ]; then
     git pull
     if [ $? -eq 0 ]; then
       echo "successful pull"
+      sh mkfeeds.sh
     fi
   else
     echo "do nothing"

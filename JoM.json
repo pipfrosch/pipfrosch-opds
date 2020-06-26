@@ -9,27 +9,27 @@
   "links" : [
     {
       "rel" : "related",
-      "href" : "/opds/mammals.atom",
+      "href" : "/mammals.atom",
       "type" : "application/atom+xml;profile=opds-catalog;kind=acquisition"
     },
     {
       "rel" : "related",
-      "href" : "/opds/vertebrates.atom",
+      "href" : "/vertebrates.atom",
       "type" : "application/atom+xml;profile=opds-catalog;kind=acquisition"
     },
     {
       "rel" : "self",
-      "href" : "/opds/JoM/JoM.atom",
+      "href" : "/JoM/JoM.atom",
       "type" : "application/atom+xml;profile=opds-catalog;kind=acquisition"
     },
     {
       "rel" : "start",
-      "href" : "/opds/root.atom",
+      "href" : "/root.atom",
       "type" : "application/atom+xml;profile=opds-catalog;kind=navigation"
     },    
     {
       "rel" : "up",
-      "href" : "/opds/root.atom",
+      "href" : "/root.atom",
       "type" : "application/atom+xml;profile=opds-catalog;kind=navigation"
     }
   ],
