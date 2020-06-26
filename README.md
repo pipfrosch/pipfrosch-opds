@@ -31,6 +31,10 @@ The `cronjob.sh` script checks to see if there are updates to the OPDS system
 and pulls them, rerunning the `mkfeeds.sh` script to bring the OPDS feeds up to
 current.
 
+The `cronjob.sh` script should be copied outside the git repo before running
+from cron so that `OPBSHOME` can be changed as needed. It should point to a
+directory that is a git clone.
+
 The not-yet-written `rsync.sh` script will pull the OPDS Atom files (and cover
 and thumbnail images) into the web server serving the OPDS Atom files.
 

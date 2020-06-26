@@ -18,4 +18,3 @@ rm -rf __pycache__
 find . -print |grep "\-noitalics\.json" |while read file; do
   rm -f "${file}"
 done
-# testing 123

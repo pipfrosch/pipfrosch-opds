@@ -14,7 +14,6 @@ if [ -d ${OPBSHOME} ]; then
   git status > /dev/null 2>&1
   n="`git status -uno |grep -ci "your branch is behind"`"
   if [ ${n} != "0" ]; then
-    echo "do stuff"
     git pull > /dev/null 2>&1
     if [ $? -eq 0 ]; then
       sh mkfeeds.sh
