@@ -1,6 +1,5 @@
 {
   "output" : "opds/groups/mammals.atom",
-  "root"   : "feed",
   "namespaces" : {
     "dc"   : "http://purl.org/dc/terms/"
   },
@@ -41,5 +40,6 @@
   ],
   "entries" : [
     "opds/JoM/JoM-V001.atom"
-  ]
+  ],
+  "content" : "Academic works related to mammalogy"
 }

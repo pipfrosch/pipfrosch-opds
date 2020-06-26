@@ -1,0 +1,28 @@
+{
+  "output" : "opds/root.atom",
+  "id" : "urn:uuid:3293ddff-8eec-49ec-84cf-12c713ff4a4c",
+  "links" : [
+    {
+      "rel" : "self",
+      "href" : "/root.atom",
+      "type" : "application/atom+xml;profile=opds-catalog;kind=navigation"
+    },
+    {
+      "rel" : "start",
+      "href" : "/root.atom",
+      "type" : "application/atom+xml;profile=opds-catalog;kind=navigation"
+    }
+  ],
+  "title"  : "Pipfrosch Press ePub Catalog",
+  "authors" : [
+    {
+      "name" : "Pipfrosch Press",
+      "uri"  : "https://pipfrosch.com/"
+    }
+  ],
+  "acquisitions" : [
+    "JoM.json",
+    "vertebrates.json",
+    "mammals.json"
+  ]
+}
