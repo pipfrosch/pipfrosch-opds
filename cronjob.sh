@@ -6,20 +6,19 @@
 # SAFER WOULD BE RUN IN OWN CONTAINER AND RSYNC PULL OVER SSH TO /srv/pipfrosch/pipfrosch-opds
 #  LIMITING BY FILE EXTENSION SO THAT IS TODO
 #
-if [ -d /srv/pipfrosch/pipfrosch-opds ]; then
-  pushd /srv/pipfrosch/pipfrosch-opds
-  git remote update
-  git status
+OPBSHOME="/srv/pipfrosch/pipfrosch-opds"
+
+if [ -d ${OPBSHOME} ]; then
+  pushd ${OPBSHOME} > /dev/null 2>&1
+  git remote update > /dev/null 2>&1
+  git status > /dev/null 2>&1
   n="`git status -uno |grep -ci "your branch is behind"`"
   if [ ${n} != "0" ]; then
     echo "do stuff"
-    git pull
+    git pull > /dev/null 2>&1
     if [ $? -eq 0 ]; then
-      echo "successful pull"
       sh mkfeeds.sh
     fi
-  else
-    echo "do nothing"
   fi
-  popd
+  popd > /dev/null 2>&1
 fi
