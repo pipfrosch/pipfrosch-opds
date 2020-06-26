@@ -6,11 +6,14 @@ for json in JoM.json mammals.json vertebrates.json; do
   python3 mkfeed.py ${json}
   python3 mkfeed.py ${noitalics}
 done
-rm -f root-noitalics.json
 cat root.json |sed -e s?"\.json"?"-noitalics.json"?g |sed -e s?"\.atom"?"-noitalics.atom"?g > root-noitalics.json
 # make sure root.json has very fresh timestamp
 touch -r root-noitalics.json root.json
 python3 mkfeed.py root.json
 python3 mkfeed.py root-noitalics.json
 
+# cleanup temporary files
 rm -rf __pycache__
+find . -print |grep "\-noitalics\.json" |while read file; do
+  rm -f "${file}"
+done
