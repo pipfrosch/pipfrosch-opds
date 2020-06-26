@@ -1,7 +1,8 @@
 pipfrosch-opds
 ==============
 This exists to ease in generation of OPDS files for Pipfrosh Press. Not
-applicable elsewhere.
+applicable elsewhere but it can be modified by other small publishers,
+have at it.
 
 Large publishers probably need to go with a database backend OPDS Atom file
 server.

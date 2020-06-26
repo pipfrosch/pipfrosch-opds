@@ -13,7 +13,7 @@ from dateutil import parser
 os.environ['TZ'] = 'Europe/London'
 time.tzset()
 
-# https://specs.opds.io/opds-1.2.html#23-acquisition-feeds
+# https://specs.opds.io/opds-1.2.html
 
 def validateUUID(string):
     if type(string) != str:
@@ -39,6 +39,40 @@ def validateUUID(string):
     if uuidlist[19] != "8":
         print("first character of fourth block in " + uuidstring + " is not 8")
         sys.exit(1)
+
+def validateNamespaces(dictionary, jsonfile):
+    if type(dictionary) != dict:
+        print("The namespaces key in " + jsonfile + " does not point to a valid dictionary.")
+        sys.exit(1)
+    keylist = dictionary.keys()
+    pattern = re.compile(r'^[a-z]+$')
+    #from https://stackoverflow.com/questions/7160737/python-how-to-validate-a-url-in-python-malformed-or-not
+    # Note that the purpose of a namespace URI is just to something unique that frequently points to a web page
+    # defining the namespace but it does not have to, so yes, localhost is legal in a namespace URI. Bad practice
+    # but legal.
+    uripattern = re.compile(
+        r'^(?:http|ftp)s?://'
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'
+        r'localhost|'
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+        r'(?::\d+)?'
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    for ns in keylist:
+        match = re.search(pattern, ns)
+        if not match:
+            print('Error in ' + jsonfile + ': A namespaces key should only contain lower case letters.')
+            sys.exit(1)
+        if len(ns) > 12:
+            print('Error in ' + jsonfile + ': A namespaces key really should not be more than twelve characters in length.')
+            sys.exit(1)
+        uri = dictionary.get(ns)
+        if type(uri) != str:
+            print('Error in ' + jsonfile + ': The value associated with the namespaces key ' + ns + ' is not a string.')
+            sys.exit(1)
+        match = re.search(uripattern, uri)
+        if not match:
+            print('Error in ' + jsonfile + ': The value associated with the namespaces key ' + ns + ' is not a valid uri.')
+            sys.exit(1)
 
 def createAtomFeed(cwd, jsonfile):
     mtime = []
@@ -69,15 +103,9 @@ def createAtomFeed(cwd, jsonfile):
     root.setAttribute('xmlns', 'http://www.w3.org/2005/Atom')
     if "namespaces" in jsondata.keys():
         namespaces = jsondata.get("namespaces")
-        # TODO verify ns and attribute are valid XMLNS
-        if type(namespaces) != dict:
-            print("The namespaces key in " + jsonfile + "is not a key=value dictionary.")
-            sys.exit(1)
+        validateNamespaces(namespaces, jsonfile)
         nskeys = namespaces.keys()
         for ns in nskeys:
-            if type(namespaces.get(ns)) != str:
-                print("The specified namespace associated with " + ns + " is not a string")
-                sys.exit(1)
             root.setAttribute('xmlns:' + ns, namespaces.get(ns))
     # get id
     if "id" not in jsondata.keys():
