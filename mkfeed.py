@@ -57,6 +57,9 @@ def createAtomFeed(cwd, jsonfile):
     if "output" not in jsondata.keys():
         print(jsonfile + ' does not specify proper output file.')
         sys.exit(1)
+    if type(jsondata.get("output")) != str:
+        print("Value for output key in " + jsonfile + " is not a string.")
+        sys.exit(1)
     string = jsondata.get("output")
     atom = os.path.join(cwd, string)
     string = "<feed/>"
@@ -65,17 +68,22 @@ def createAtomFeed(cwd, jsonfile):
     # add namespaces
     root.setAttribute('xmlns', 'http://www.w3.org/2005/Atom')
     if "namespaces" in jsondata.keys():
-        #today ckeck if has keys
         namespaces = jsondata.get("namespaces")
+        # TODO verify ns and attribute are valid XMLNS
+        if type(namespaces) != dict:
+            print("The namespaces key in " + jsonfile + "is not a key=value dictionary.")
+            sys.exit(1)
         nskeys = namespaces.keys()
         for ns in nskeys:
+            if type(namespaces.get(ns)) != str:
+                print("The specified namespace associated with " + ns + " is not a string")
+                sys.exit(1)
             root.setAttribute('xmlns:' + ns, namespaces.get(ns))
     # get id
     if "id" not in jsondata.keys():
         print(jsonfile + ' does not specify id.')
         sys.exit(1)
     validateUUID(jsondata.get("id"))
-    # TODO verify uuid
     stringlist = list(jsondata.get("id"))
     if "-noitalics" in jsonfile:
         # indicate noitalics by changing first hex of fourth group to 9
@@ -86,27 +94,53 @@ def createAtomFeed(cwd, jsonfile):
     node.appendChild(text)
     root.appendChild(node)
     # get links
-    links = jsondata.get("links")
     if "links" not in jsondata.keys():
         print(jsonfile + ' does not specify links.')
         sys.exit(1)
+    links = jsondata.get("links")
+    if type(links) != list:
+        print("The links key in " + jsonfile + "is not a list.")
+        sys.exit(1)
     for link in links:
-        # TODO verify links
+        if type(link) != dict:
+            print("some entries in the links key in " + jsonfile  + " are not a key=value dictionary.")
+            sys.exit(1)
         node = mydom.createElement('link')
+        if "rel" not in link.keys():
+            print("some dictionaries in the links key in " + jsonfile + " do not have a rel key.")
+            sys.exit(1)
+        if type(link.get("rel")) != str:
+            print("Some rel keys in dictionaries within the links key in " + jsonfile + " do not have a string value.")
+            sys.exit(1)
         node.setAttribute("rel", link.get("rel"))
+        if "href" not in link.keys():
+            print("some dictionaries in the links key in " + jsonfile + " do not have a href key.")
+            sys.exit(1)
+        if type(link.get("href")) != str:
+            print("Some href keys in dictionaries within the links key in " + jsonfile + " do not have a string value.")
+            sys.exit(1)
         node.setAttribute("href", link.get("href"))
+        if "type" not in link.keys():
+            print("some dictionaries in the links key in " + jsonfile + " do not have a type key.")
+            sys.exit(1)
+        if type(link.get("type")) != str:
+            print("Some type keys in dictionaries within the links key in " + jsonfile + " do not have a string value.")
+            sys.exit(1)
         node.setAttribute("type", link.get("type"))
         root.appendChild(node)
     # feed title
     if "title" not in jsondata.keys():
         print(jsonfile + ' does not specify title.')
         sys.exit(1)
+    if type(jsondata.get("title")) != str:
+        print("The title value in " + jsonfile + " is not a string.")
+        sys.exit(1)
     string = jsondata.get("title")
     text = mydom.createTextNode(string)
     node = mydom.createElement('title')
     node.appendChild(text)
     root.appendChild(node)
-    # create modified node
+    # create update node but do not fill it yet
     modified = mydom.createElement('updated')
     root.appendChild(modified)
     # author(s)
