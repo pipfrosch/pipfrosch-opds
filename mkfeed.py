@@ -123,7 +123,8 @@ def createAtomFeed(cwd, jsonfile):
     except:
         print(jsonfile + ' does not appear to be valid JSON.')
         sys.exit(1)
-    if 'output' not in jsondata.keys():
+    jsonkeys = jsondata.keys()
+    if 'output' not in jsonkeys:
         print(jsonfile + ' does not specify proper output file.')
         sys.exit(1)
     if type(jsondata.get('output')) != str:
@@ -136,14 +137,14 @@ def createAtomFeed(cwd, jsonfile):
     root = mydom.getElementsByTagName('feed')[0]
     # add namespaces
     root.setAttribute('xmlns', 'http://www.w3.org/2005/Atom')
-    if 'namespaces' in jsondata.keys():
+    if 'namespaces' in jsonkeys:
         namespaces = jsondata.get('namespaces')
         validateNamespaces(namespaces, jsonfile)
         nskeys = namespaces.keys()
         for ns in nskeys:
             root.setAttribute('xmlns:' + ns, namespaces.get(ns))
     # get id
-    if 'id' not in jsondata.keys():
+    if 'id' not in jsonkeys:
         print(jsonfile + ' does not specify id.')
         sys.exit(1)
     validateUUID(jsondata.get('id'), jsonfile)
@@ -157,7 +158,7 @@ def createAtomFeed(cwd, jsonfile):
     node.appendChild(text)
     root.appendChild(node)
     # get links
-    if 'links' not in jsondata.keys():
+    if 'links' not in jsonkeys:
         print(jsonfile + ' does not specify links.')
         sys.exit(1)
     links = jsondata.get("links")
@@ -167,9 +168,11 @@ def createAtomFeed(cwd, jsonfile):
         node.setAttribute('rel', link.get('rel'))
         node.setAttribute('href', link.get('href'))
         node.setAttribute('type', link.get('type'))
+        if ('title') in link.keys():
+            node.setAttribute('title', link.get('title'))
         root.appendChild(node)
     # feed title
-    if 'title' not in jsondata.keys():
+    if 'title' not in jsonkeys:
         print(jsonfile + ' does not specify title.')
         sys.exit(1)
     if type(jsondata.get('title')) != str:
@@ -184,7 +187,7 @@ def createAtomFeed(cwd, jsonfile):
     modified = mydom.createElement('updated')
     root.appendChild(modified)
     # author(s)
-    if 'authors' not in jsondata.keys():
+    if 'authors' not in jsonkeys:
         print(jsonfile + ' does not specify author(s).')
         sys.exit(1)
     authors = jsondata.get('authors')
@@ -205,7 +208,7 @@ def createAtomFeed(cwd, jsonfile):
         root.appendChild(authornode)
     testcounter = 0
     # acquisition nodes
-    if 'acquisitions' in jsondata.keys():
+    if 'acquisitions' in jsonkeys:
         testcounter += 1
         acquisitions = jsondata.get('acquisitions')
         if type(acquisitions) != list:
@@ -288,7 +291,7 @@ def createAtomFeed(cwd, jsonfile):
             # append the entry
             root.appendChild(entry)
     # entry nodes
-    if 'entries' in jsondata.keys():
+    if 'entries' in jsonkeys:
         testcounter += 1
         entries = jsondata.get('entries')
         if type(entries) != list:

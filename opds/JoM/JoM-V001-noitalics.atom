@@ -7,12 +7,13 @@
     <uri>https://www.mammalogy.org/</uri>
   </author>
   <published>2020-06-01T00:00:00Z</published>
+  <updated>2020-06-27T10:55:48Z</updated>
   <dc:language>en-US</dc:language>
   <dc:identifier>2170060d-e36c-49b7-8640-e501d682ef45</dc:identifier>
   <dc:publisher>Pipfrosch Press</dc:publisher>
   <dc:issued>1919–1920</dc:issued>
-  <summary>1919–1920 Numbers 1–5 plus Supplemental content</summary>
-  <link href="https://pipfrosch.com/jom-volume-1-preview-1/" rel="alternate" title="View at Pipfrosch Press" type="text/html"/>
+  <summary>Originally published quarterly during 1919 and 1920, this is the first volume of Journal of Mammalogy containing five different Numbers (issues) including academic articles, reviews of recent literature, and feedback from readers. In this ePub edition, a glossary of terms that is beneficial to non-academic readers as well as some freshly written supplemental content is also included.</summary>
+  <link href="https://pipfrosch.com/jom-volume-1-preview-1/" rel="alternate" title="View at Pipfrosch Press Website" type="text/html"/>
   <link href="/JoM/JoM-V001.cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg"/>
   <link href="/JoM/JoM-V001.thumbnail.jpg" rel="http://opds-spec.org/image/thumbnail" type="image/jpeg"/>
   <link href="/JoM/JoM-V001-noitalics.atom" rel="self" type="application/atom+xml;type=entry;profile=opds-catalog"/>
